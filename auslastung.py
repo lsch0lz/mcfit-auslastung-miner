@@ -61,28 +61,15 @@ import csv
 with open('data.csv', mode='a') as file:
     fieldnames = ['date', 'time', 'studio', 'auslastung']
     writer = csv.DictWriter(file, fieldnames=fieldnames)
-    date_warning = date.today()
-    time_warning = datetime.now()
+    today_warning = date.today()
 
     for studio in studios:
         try:
             print(studio)
             writer.writerow(get_auslastung(studio))
-            with open('log.txt', mode='a') as log:
-                logfile_succ = "SUCCESFULL!:" + "," + str(date_warning) + "," + str(time_warning) + "," + studio + "\n"
-                log.write(logfile_succ)
-                log.close()
         except Exception:
             print("!!!!RETRYING!!!!")
-            with open('log.txt', mode='a') as log:
-                logfile_err= "ERROR!: " + "," + str(date_warning) + "," + str(time_warning) + "," + studio + "\n"
-                log.write(logfile_err)
-                log.close()
             writer.writerow(get_auslastung(studio))
-
             #print("Exception: Continue")
             #continue
-
-
-
 
